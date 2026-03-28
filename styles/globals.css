@@ -1,0 +1,157 @@
+body {
+  font-family: "Inter", sans-serif;
+  background: #fafafa;
+  color: #222;
+}
+
+/* NAVBAR */
+.navbar {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 60px;
+  border-bottom: 1px solid #eee;
+  background: white;
+}
+
+.logo {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.navbar a {
+  margin-left: 25px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+}
+
+/* WRAPPER (important fix) */
+.wrapper {
+  padding: 40px 0;
+}
+
+/* CENTER CONTENT */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  gap: 40px;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 260px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  height: fit-content;
+}
+
+.filter-title {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.filter-group {
+  margin-bottom: 25px;
+}
+
+.filter-group p {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.filter-group label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+/* CONTENT */
+.content {
+  flex: 1;
+}
+
+.title {
+  font-size: 22px;
+  margin-bottom: 25px;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+/* CARD */
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 15px;
+  border: 1px solid #eee;
+  transition: all 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* IMAGE */
+.product-image {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+}
+
+/* TEXT */
+.product-title {
+  font-size: 14px;
+  margin: 12px 0;
+  line-height: 1.4;
+}
+
+.price {
+  font-weight: 600;
+  color: #111;
+}
+
+/* FOOTER */
+.footer {
+  margin-top: 60px;
+  padding: 20px;
+  text-align: center;
+  background: white;
+  border-top: 1px solid #eee;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+    padding: 0 20px;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    padding: 0 20px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
