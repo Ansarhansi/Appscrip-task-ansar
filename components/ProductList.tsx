@@ -9,14 +9,14 @@ export default function ProductList({ products }: any) {
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
 
-  const [filtered, setFiltered] = useState(products);
+  const [filtered, setFiltered] = useState(products || []);
 
   useEffect(() => {
-    let temp = [...products];
+    let temp = [...(products || [])];
 
     if (search) {
       temp = temp.filter((p) =>
-        p.title.toLowerCase().includes(search.toLowerCase()),
+        p.title.toLowerCase().includes(search.toLowerCase())
       );
     }
 
@@ -26,7 +26,7 @@ export default function ProductList({ products }: any) {
 
     if (price === "low") temp = temp.filter((p) => p.price < 100);
     if (price === "mid")
-      temp = temp.filter((p) => p.price <= 500 && p.price >= 100);
+      temp = temp.filter((p) => p.price >= 100 && p.price <= 500);
     if (price === "high") temp = temp.filter((p) => p.price > 500);
 
     if (sort === "low") temp.sort((a, b) => a.price - b.price);
@@ -35,9 +35,13 @@ export default function ProductList({ products }: any) {
     setFiltered(temp);
   }, [search, sort, category, price, products]);
 
+  // ✅ SAFE FALLBACK
+  if (!products || products.length === 0) {
+    return <p style={{ padding: "20px" }}>No products available</p>;
+  }
+
   return (
     <div className="container">
-      {/* Sidebar */}
       <aside className="sidebar">
         <h2>Filters</h2>
 
@@ -58,7 +62,6 @@ export default function ProductList({ products }: any) {
         </select>
       </aside>
 
-      {/* Content */}
       <section className="content">
         <div className="top-bar">
           <input
@@ -72,8 +75,8 @@ export default function ProductList({ products }: any) {
             onChange={(e) => setSort(e.target.value)}
           >
             <option value="">Sort</option>
-            <option value="low">Price: Low → High</option>
-            <option value="high">Price: High → Low</option>
+            <option value="low">Low → High</option>
+            <option value="high">High → Low</option>
           </select>
         </div>
 

@@ -8,7 +8,7 @@ export default function Navbar() {
       <nav>
         <Link href="/">Home</Link>
         <Link href="/">Products</Link>
-        <Link href="#">Contact</Link>
+        <Link href="/contact">Contact</Link>
       </nav>
     </header>
   );

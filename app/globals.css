@@ -265,7 +265,7 @@ body {
   }
 }
 
-/* Mobile */
+
 @media (max-width: 600px) {
   .navbar {
     padding: 0 20px;
