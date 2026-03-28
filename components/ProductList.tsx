@@ -3,41 +3,71 @@
 import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 
-export default function ProductList({ products }: any) {
+export default function ProductList() {
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
 
-  const [filtered, setFiltered] = useState(products || []);
-
+  // ✅ FETCH ON CLIENT SIDE
   useEffect(() => {
-    let temp = [...(products || [])];
+    async function fetchProducts() {
+      try {
+        const res = await fetch("https://fakestoreapi.com/products");
+        const data = await res.json();
+        setProducts(data);
+      } catch (error) {
+        console.log("Using fallback data");
 
-    if (search) {
-      temp = temp.filter((p) =>
-        p.title.toLowerCase().includes(search.toLowerCase())
-      );
+        setProducts([
+          {
+            id: 1,
+            title: "Sample Product 1",
+            price: 499,
+            image: "https://via.placeholder.com/200",
+            category: "electronics",
+          },
+          {
+            id: 2,
+            title: "Sample Product 2",
+            price: 999,
+            image: "https://via.placeholder.com/200",
+            category: "men's clothing",
+          },
+        ]);
+      } finally {
+        setLoading(false);
+      }
     }
 
-    if (category) {
-      temp = temp.filter((p) => p.category === category);
-    }
+    fetchProducts();
+  }, []);
 
-    if (price === "low") temp = temp.filter((p) => p.price < 100);
-    if (price === "mid")
-      temp = temp.filter((p) => p.price >= 100 && p.price <= 500);
-    if (price === "high") temp = temp.filter((p) => p.price > 500);
+  let filtered = [...products];
 
-    if (sort === "low") temp.sort((a, b) => a.price - b.price);
-    if (sort === "high") temp.sort((a, b) => b.price - a.price);
+  if (search) {
+    filtered = filtered.filter((p) =>
+      p.title.toLowerCase().includes(search.toLowerCase())
+    );
+  }
 
-    setFiltered(temp);
-  }, [search, sort, category, price, products]);
+  if (category) {
+    filtered = filtered.filter((p) => p.category === category);
+  }
 
-  // ✅ SAFE FALLBACK
-  if (!products || products.length === 0) {
-    return <p style={{ padding: "20px" }}>No products available</p>;
+  if (price === "low") filtered = filtered.filter((p) => p.price < 100);
+  if (price === "mid")
+    filtered = filtered.filter((p) => p.price >= 100 && p.price <= 500);
+  if (price === "high") filtered = filtered.filter((p) => p.price > 500);
+
+  if (sort === "low") filtered.sort((a, b) => a.price - b.price);
+  if (sort === "high") filtered.sort((a, b) => b.price - a.price);
+
+  if (loading) {
+    return <p style={{ padding: "20px" }}>Loading products...</p>;
   }
 
   return (
@@ -81,7 +111,7 @@ export default function ProductList({ products }: any) {
         </div>
 
         <div className="grid">
-          {filtered.map((item: any) => (
+          {filtered.map((item) => (
             <ProductCard key={item.id} product={item} />
           ))}
         </div>

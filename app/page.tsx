@@ -1,38 +1,22 @@
-async function getProducts() {
-  try {
-    const res = await fetch("https://fakestoreapi.com/products", {
-      next: { revalidate: 60 },
-    });
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import ProductList from "@/components/ProductList";
 
-    if (!res.ok) throw new Error("API failed");
+export default function Home() {
+  return (
+    <>
+      <Navbar />
 
-    return res.json();
-  } catch (error) {
-    console.log("Using fallback data");
+      <main className="wrapper">
+        <div className="page-header">
+          <h1>DISCOVER OUR PRODUCTS</h1>
+          <p>Explore premium items curated just for you</p>
+        </div>
 
-   
-    return [
-      {
-        id: 1,
-        title: "Sample Product 1",
-        price: 499,
-        image: "https://via.placeholder.com/200",
-        category: "electronics",
-      },
-      {
-        id: 2,
-        title: "Sample Product 2",
-        price: 999,
-        image: "https://via.placeholder.com/200",
-        category: "men's clothing",
-      },
-      {
-        id: 3,
-        title: "Sample Product 3",
-        price: 299,
-        image: "https://via.placeholder.com/200",
-        category: "women's clothing",
-      },
-    ];
-  }
+        <ProductList />
+      </main>
+
+      <Footer />
+    </>
+  );
 }
